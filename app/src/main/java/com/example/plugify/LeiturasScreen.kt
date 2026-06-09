@@ -1,9 +1,12 @@
 package com.example.plugify
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,37 +15,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.plugify.model.Animal
-import android.util.Log
+import com.example.plugify.model.Leitura
 
 @Composable
-fun AnimaisScreen() {
+fun LeiturasScreen() {
 
-    Log.d("API", "AnimaisScreen carregada")
-
-    var animais by remember {
-        mutableStateOf<List<Animal>>(emptyList())
+    var leituras by remember {
+        mutableStateOf<List<Leitura>>(emptyList())
     }
 
     LaunchedEffect(Unit) {
 
-        try {
-
-            Log.d("API", "Iniciando chamada")
-
-            animais = RetrofitInstance.api.listarAnimais()
-
-            Log.d("API", "Animais recebidos: ${animais.size}")
-
-        } catch (e: Exception) {
-
-            Log.e("API", "Erro ao carregar animais", e)
-        }
+        leituras =
+            RetrofitInstance.api.listarLeituras(1)
     }
 
     LazyColumn {
 
-        items(animais) { animal ->
+        items(leituras) { leitura ->
 
             Card(
                 modifier = Modifier
@@ -54,17 +44,20 @@ fun AnimaisScreen() {
                     modifier = Modifier.padding(16.dp)
                 ) {
 
-                    Text(animal.identificacao)
-
                     Text(
-                        "Raça: ${animal.raca}"
+                        "Lat: ${leitura.latitude}"
                     )
 
                     Text(
-                        if (animal.ativo)
-                            "Ativo"
-                        else
-                            "Inativo"
+                        "Lon: ${leitura.longitude}"
+                    )
+
+                    Text(
+                        leitura.status
+                    )
+
+                    Text(
+                        leitura.timestamp
                     )
                 }
             }

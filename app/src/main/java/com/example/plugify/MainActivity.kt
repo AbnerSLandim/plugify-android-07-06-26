@@ -41,7 +41,8 @@ enum class AppDestinations(
 ) {
     DASHBOARD("Resumo", R.drawable.outline_dashboard_24),
     MAPA("Mapa", R.drawable.outline_file_map_24),
-    ANIMAIS("Animais", R.drawable.outline_grass_24)
+    ANIMAIS("Animais", R.drawable.outline_grass_24),
+    ALERTAS("Alertas", R.drawable.outline_mobile_alert_24)
 }
 
 @Composable
@@ -91,6 +92,9 @@ fun GadoApp() {
 
                     AppDestinations.ANIMAIS ->
                         AnimaisScreen()
+
+                    AppDestinations.ALERTAS ->
+                        AlertasScreen()
                 }
             }
         }

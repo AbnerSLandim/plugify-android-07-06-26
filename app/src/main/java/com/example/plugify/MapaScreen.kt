@@ -23,9 +23,7 @@ fun MapaScreen() {
 
             val map = MapView(context)
 
-            map.setTileSource(
-                TileSourceFactory.MAPNIK
-            )
+            map.setTileSource(TileSourceFactory.MAPNIK)
 
             map.controller.setZoom(14.0)
 
@@ -34,23 +32,14 @@ fun MapaScreen() {
                 -46.63330
             )
 
-            map.controller.setCenter(
-                centroSP
-            )
+            map.controller.setCenter(centroSP)
 
-            AnimalRepository.animais.forEach { animal ->
+            val marker = Marker(map)
 
-                val marker = Marker(map)
+            marker.position = centroSP
+            marker.title = "Área monitorada"
 
-                marker.position = GeoPoint(
-                    animal.latitude,
-                    animal.longitude
-                )
-
-                marker.title = animal.nome
-
-                map.overlays.add(marker)
-            }
+            map.overlays.add(marker)
 
             map
         }
